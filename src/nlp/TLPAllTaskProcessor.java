@@ -6,11 +6,8 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
-import java.util.HashMap;
 
 import org.json.JSONArray;
-import org.json.JSONObject;
-//import com.cedarsoftware.util.io.JsonReader;
 import org.json.JSONTokener;
 
 public class TLPAllTaskProcessor {
@@ -108,38 +105,6 @@ public class TLPAllTaskProcessor {
 		 ]
 		]
 	 * */
-	public HashMap<String, String> JSONParse(JSONTokener jsonTokener) throws IOException {
-		HashMap retMap = new HashMap();
-		
-		JSONArray jsonParaArray = new JSONArray(jsonTokener); // 段落的列表
-		System.out.println(jsonParaArray.toString());
-		int paraId = 0;//
-		while (paraId < jsonParaArray.length()) {
-			
-			JSONArray jsonSentArray = jsonParaArray.getJSONArray(paraId); // 句子的列表
-			int sentId = 0;
-			while (sentId < jsonSentArray.length()) {
-				
-				JSONArray jsonWordArray = jsonSentArray.getJSONArray(sentId); // 词的列表
-				int wordId = 0;
-				while (wordId < jsonWordArray.length()) {
-					
-					JSONObject jsonWord = jsonWordArray.getJSONObject(wordId);
-					if (jsonWord.get("semrelate").equals("Root")) {
-						retMap.put("service", jsonWord.getString("cont"));
-					} else if (jsonWord.get("pos").equals("m")) {
-						retMap.put("number", jsonWord.getString("cont"));
-					} else if (jsonWord.get("pos").equals("nh")) {
-						retMap.put("person", jsonWord.getString("cont"));
-					}
-					wordId++;
-				}
-				sentId++;
-			}
-			paraId++;
-		}
-		return retMap;
-	}
 	
 	public static void main(String[] args) throws IOException {
 		//String testStr = "我要转给李朋1000元钱";
