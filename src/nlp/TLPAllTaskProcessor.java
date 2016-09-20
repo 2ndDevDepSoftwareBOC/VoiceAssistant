@@ -20,7 +20,7 @@ public class TLPAllTaskProcessor {
 	private final String format = "json";
 	private final String pattern = "all";
 
-	public HashMap<String, String> process(String originalStr) throws IOException {
+	public String process(String originalStr) throws IOException {
 		String encodeStr = URLEncoder.encode(originalStr, "utf-8");
 		
 		// "http://api.ltp-cloud.com/analysis/?api_key=YourApiKey&text=我是中国人。&pattern=dp&format=plain"
@@ -36,13 +36,10 @@ public class TLPAllTaskProcessor {
 		InputStreamReader inputStreamReader = new InputStreamReader(conn.getInputStream(), "utf-8");
 		
 		JSONTokener jsonTokener = new JSONTokener(inputStreamReader);
-		jsonTokener.
-		HashMap<String, String> retMap = JSONParse(jsonTokener);
-		retMap.put("original", originalStr);
-		
+		JSONArray jsonArray = new JSONArray(jsonTokener);
 		inputStreamReader.close();
 		
-		return retMap;
+		return jsonArray.toString();
 	}
 	
 	/*
@@ -148,8 +145,7 @@ public class TLPAllTaskProcessor {
 		//String testStr = "我要转给李朋1000元钱";
 		String testStr = "我要查询借记卡余额";
 		TLPAllTaskProcessor allTaskProcessor = new TLPAllTaskProcessor();
-		HashMap<String, String> hashMap = allTaskProcessor.process(testStr);
-		System.out.println(hashMap.toString());
+		System.out.println(allTaskProcessor.process(testStr));
 	}
 
 }
