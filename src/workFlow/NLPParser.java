@@ -5,9 +5,29 @@ import java.util.HashMap;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-public abstract class NLPParser {
+public class NLPParser {
 	
-	public abstract void match(HashMap<String, String> hashMap, JSONObject jsonWord);
+	// 不用抽象方法，感觉不太好，
+	public void match(HashMap<String, String> hashMap, JSONObject jsonWord) {}
+	
+	public String getRootWord(String jsonStr) {
+
+		JSONArray jsonArray = new JSONArray(jsonStr); // 段落的列表
+		JSONArray jsonWordArray = jsonArray.getJSONArray(0).getJSONArray(0); //每个取第一个元素，词的列表
+
+		int wordId = 0;
+		JSONObject jsonWord = null;
+		while (wordId < jsonWordArray.length()) {
+			
+			jsonWord = jsonWordArray.getJSONObject(wordId);
+			if (jsonWord.get("semrelate").equals("Root")) {
+				return jsonWord.getString("cont");
+			}
+			wordId++;
+		}
+
+		return null;
+	}
 
 	public HashMap<String, String> execute(String originalStr, String functionName, String jsonStr){
 
