@@ -1,37 +1,32 @@
 package workFlow;
 
 import java.util.HashMap;
-import java.util.Map;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-public  class NLPParser {
+public abstract class NLPParser {
 	
-	public  Map execute(String functionName, String jsonString) {
-		
-		Map elementMap = new HashMap();
-		JSONObject jsonWord = preProcess(functionName,jsonString);
+	public abstract void match(HashMap<String, String> hashMap, JSONObject jsonWord);
 
-		return elementMap;
-	}
+	public HashMap<String, String> execute(String originalStr, String functionName, String jsonStr){
 
-	public JSONObject preProcess(String functionName, String jsonString){
+		HashMap<String, String> retMap = new HashMap<String, String>();
+		retMap.put("originalStr", originalStr);
+		retMap.put("function", functionName);
 
-		JSONArray jsonParaArray = new JSONArray(jsonString); // 段落的列表
-
-		JSONArray jsonWordArray = jsonParaArray.getJSONArray(0).getJSONArray(0); //每个取第一个元素，词的列表
+		JSONArray jsonArray = new JSONArray(jsonStr); // 段落的列表
+		JSONArray jsonWordArray = jsonArray.getJSONArray(0).getJSONArray(0); //每个取第一个元素，词的列表
 		
 		int wordId = 0;
 		JSONObject jsonWord = null;
 		while (wordId < jsonWordArray.length()) {
-
-			 jsonWord = jsonWordArray.getJSONObject(wordId);
-			 
+			
+			jsonWord = jsonWordArray.getJSONObject(wordId);
+			match(retMap, jsonWord);
+			wordId++;
 		}
-		return jsonWord;
 
+		return retMap;
 	}
-
-
 }
