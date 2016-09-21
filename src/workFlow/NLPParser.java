@@ -8,7 +8,7 @@ import org.json.JSONObject;
 public class NLPParser {
 	
 	// 不用抽象方法，感觉不太好，
-	public void match(HashMap<String, String> hashMap, JSONObject jsonWord) {}
+	private void match(HashMap<String, String> hashMap, JSONObject jsonWord) {}
 	
 	public String getRootWord(String jsonStr) {
 
