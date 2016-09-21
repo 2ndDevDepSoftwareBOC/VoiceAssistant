@@ -31,6 +31,7 @@ import com.jdnull.speechRec.baiduAPI.Recognizer;
  */
 public class Voice2StrFilter implements Filter {  
    
+	
    @Override  
    public void destroy() {  
       System.out.println("destory filter……");  
