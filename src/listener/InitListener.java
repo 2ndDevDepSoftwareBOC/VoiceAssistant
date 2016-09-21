@@ -1,3 +1,4 @@
+package listener;
 
 
 import java.io.IOException;
@@ -20,8 +21,8 @@ import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.RAMDirectory;
 
+import workFlow.CrossBankNLPParser;
 import workFlow.Function;
-import workFlow.Node;
 
 
 
@@ -85,24 +86,13 @@ public class InitListener implements ServletContextListener{
 			sct.setAttribute("reader", 	 DirectoryReader.open(index));   
 						
 			
-			//------------------初始化引擎----------------------
-			//页面初始化后，点击按钮触发
-//			Map map = new HashMap();
-//			
-//			Node node1 = new Node( "99001",  "99002",  "",
-//					 Node.ASK,"您好，请问您需要办理什么业务？");
-//			map.put(node1.getId(), node1);
-//			
-//			Node node2 = new Node( "99002",  "end",  "",
-//					 Node.REDIRECT,"");
-//			map.put(node2.getId(), node2);
-//			
-//			Function function1 = new Function( "99","int", null, map);
-//		
-//			
-//			Node node1 = new Node( "100001",  "100002",  "!空",
-//					 Node.REDIRECT);
+			//------------------初始化交互引擎----------------------
 			
+			Function function1 = new Function( "100101","跨行转账", null, null);
+			function1.setParser(new CrossBankNLPParser());
+			
+			Map funcitonMap = new HashMap();
+			sct.setAttribute("跨行转账",function1);   
 			
 			
 		} catch (Exception e) { 

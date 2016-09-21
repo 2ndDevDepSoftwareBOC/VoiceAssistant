@@ -1,3 +1,4 @@
+package util;
 
 public class TxtReader  {
 	public void excute(String str,String path) {

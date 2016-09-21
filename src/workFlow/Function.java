@@ -10,7 +10,7 @@ public class Function {
 	
 	private Map fieldMap ;//表单映射和值
 	private Map nodeList ;//节点列表
-	
+	private NLPParser parser;
 	
 	public Function(String id, String name, Map fieldMap, Map nodeList) {
 		super();
@@ -18,6 +18,14 @@ public class Function {
 		this.name = name;
 		this.fieldMap = fieldMap;
 		this.nodeList = nodeList;
+	}
+
+	public NLPParser getParser() {
+		return parser;
+	}
+
+	public void setParser(NLPParser parser) {
+		this.parser = parser;
 	}
 
 	public String getId() {

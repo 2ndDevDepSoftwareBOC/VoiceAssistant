@@ -21,7 +21,7 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 import com.jdnull.speechRec.baiduAPI.Recognizer;
 
-@WebFilter(urlPatterns={"/engine/*"}, asyncSupported=true, dispatcherTypes={DispatcherType.REQUEST}
+@WebFilter(urlPatterns={"/voiceAssistant/redirect"}, asyncSupported=true, dispatcherTypes={DispatcherType.REQUEST}
          )  
 
 /**

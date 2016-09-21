@@ -12,15 +12,18 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import nlp.*;
 import workFlow.*;
 
-@WebFilter(urlPatterns={"/engine/*"}, asyncSupported=true, dispatcherTypes={DispatcherType.REQUEST}
+@WebFilter(urlPatterns={"/voiceAssistant/redirect"}, asyncSupported=true, dispatcherTypes={DispatcherType.REQUEST}
          )  
 
 /**
  * 
- * @将声音转换为文本
+ * @将文本转成结构化文本
  *
  */
 public class Str2FunctionFilter implements Filter {  
@@ -38,20 +41,48 @@ public class Str2FunctionFilter implements Filter {
       String plainStr = (String) request.getAttribute("plainStr");
       
       TLPAllTaskProcessor tlpProcessor = new TLPAllTaskProcessor();
-      String jsonStr = tlpProcessor.process(plainStr);
+      String jsonStr = tlpProcessor.process(plainStr);//词性分析及依赖关系
       
-      NLPParser nlpParser = new NLPParser(); 
-      String rootWord = nlpParser.getRootWord(jsonStr);
-
-      WordVector wordVector = new WordVector();
-      String functionName = wordVector.matchWordSet(rootWord); // 硬匹配，后面改word2vec
-
-      HashMap<String, String> functionElementMap = null;
-      if (functionName.equals("转账")) { // 根据rootword确定业务规则
-
-            functionElementMap = ((CrossBankNLPParser)nlpParser).execute(plainStr, functionName, jsonStr);
-      }
+      request.setAttribute("funtionName", getFunctionName(jsonStr));
+      request.setAttribute("plainStr",plainStr );
+      
+//
+//     
+//
+//      HashMap<String, String> functionElementMap = null;
+//      if (functionName.equals("转账")) { // 根据rootword确定业务规则
+//
+//            functionElementMap = ((CrossBankNLPParser)nlpParser).execute(plainStr, functionName, jsonStr);
+//      }
    }  
+   
+   
+   /**
+    * 确定服务大类
+    * @param jsonStr
+    * @return
+    */
+   public String getFunctionName(String jsonStr) {
+
+		JSONArray jsonArray = new JSONArray(jsonStr); // 段落的列表
+		JSONArray jsonWordArray = jsonArray.getJSONArray(0).getJSONArray(0); //每个取第一个元素，词的列表
+
+		int wordId = 0;
+		JSONObject jsonWord = null;
+		String rootWord="";
+		while (wordId < jsonWordArray.length()) {
+			
+			jsonWord = jsonWordArray.getJSONObject(wordId);
+			if (jsonWord.get("semrelate").equals("Root")) {
+				rootWord = jsonWord.getString("cont");
+				break;
+			}
+			wordId++;
+		}
+
+		 WordVector wordVector = new WordVector();
+	     return  wordVector.matchWordSet(rootWord); // 规则硬匹配，后面改word2vec
+	}
    
    @Override  
    public void init(FilterConfig filterConfig) throws ServletException {  
