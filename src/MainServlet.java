@@ -27,7 +27,7 @@ import org.apache.lucene.search.TopScoreDocCollector;
 import workFlow.Function;
 import workFlow.Node;
 
-@WebServlet("/engine/main")
+@WebServlet("/voiceAssistant/question")
 public class MainServlet extends HttpServlet {
 
 	/**
