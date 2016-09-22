@@ -1,6 +1,5 @@
 package servlet;
 
-
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -38,66 +37,69 @@ public class MainServlet extends HttpServlet {
 	}
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		System.out.println("get");
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 
-		request.setCharacterEncoding("UTF-8"); 
-		ServletContext sct=getServletConfig().getServletContext();   
-		//HttpSession session = request.getSession();
+		request.setCharacterEncoding("UTF-8");
+		ServletContext sct = getServletConfig().getServletContext();
+		// HttpSession session = request.getSession();
 
 		String functionId = (String) request.getAttribute("functionId");
 		String functionName = (String) request.getAttribute("functionName");
+		String originalStr = (String) request.getAttribute("originalStr");
+		String nlpJsonStr = (String) request.getAttribute("nlpJsonStr");
 
-		
-		Map functionMap = (HashMap)sct.getAttribute("functionMap"); 
-		Function function = (Function) functionMap.get("functionName");
+		HashMap<String, Function> functionMap = (HashMap<String, Function>) sct.getAttribute("functionMap");
+		Function function = (Function) functionMap.get(functionName);
 		NLPParser parser = function.getParser();
 
-		Map elementMap = parser.execute(originalStr, functionName, jsonStr);
-		//跳转
-		String urlName ="";
+		HashMap<String, String> elementMap = parser.execute(originalStr, functionName, nlpJsonStr);
+		// 跳转
+		String urlName = "";
 		try {
-			urlName = redirect( functionName,(IndexReader)sct.getAttribute("reader"));//跳转url
+			urlName = redirect(functionName, (IndexReader) sct.getAttribute("reader"));// 跳转url
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		
+
 		elementMap.put("urlName", urlName);
 
 		response.getWriter().print(JSONObject.fromObject(elementMap));
 
 	}
 
+	private String redirect(String functionName, IndexReader reader)
+			throws IOException, ParseException, ParseException, ParseException {
 
+		IndexSearcher searcher = new IndexSearcher(reader); // 3. search
+		int hitsPerPage = 1;
+		Query q = new QueryParser("functionName", new StandardAnalyzer()).parse(functionName);
+		TopScoreDocCollector collector = TopScoreDocCollector.create(hitsPerPage);
+		searcher.search(q, collector);
+		ScoreDoc[] hits = collector.topDocs().scoreDocs;
 
+		String url = "";
 
-private String  redirect(String functionName, IndexReader reader ) throws IOException, ParseException, ParseException, ParseException{ 
+		for (int i = 0; i < hits.length; ++i) {
+			int docId = hits[i].doc;
+			Document d = searcher.doc(docId);//
+			url = d.get("url");
+		}
+		System.out.println("url:" + url);
 
-	IndexSearcher searcher = new IndexSearcher(reader);           // 3. search 
-	int hitsPerPage = 1; 
-	Query q = new QueryParser("functionName",new StandardAnalyzer()).parse(functionName);
-	TopScoreDocCollector collector = TopScoreDocCollector.create(hitsPerPage); 
-	searcher.search(q, collector); 
-	ScoreDoc[] hits = collector.topDocs().scoreDocs; 
+		return url;
 
-	String url = "" ;
-
-	for(int i=0;i<hits.length;++i) { 
-		int docId = hits[i].doc; 
-		Document d = searcher.doc(docId);//
-		url = d.get("url");
-	} 
-	System.out.println("url:"+ url);
-
-	return url;
-
-} 
+	}
 }

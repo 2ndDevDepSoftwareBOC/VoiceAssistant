@@ -38,22 +38,13 @@ public class Str2FunctionFilter implements Filter {
          FilterChain chain) throws IOException, ServletException {  
       System.out.println("Str2FunctionFilter filter……");  
       
-      String plainStr = (String) request.getAttribute("plainStr");
+      String originalStr = (String) request.getAttribute("originalStr");
       
       TLPAllTaskProcessor tlpProcessor = new TLPAllTaskProcessor();
-      String jsonStr = tlpProcessor.process(plainStr);//词性分析及依赖关系
+      String nlpJsonStr = tlpProcessor.process(originalStr);//词性分析及依赖关系
       
-      request.setAttribute("funtionName", getFunctionName(jsonStr));
-      request.setAttribute("plainStr",plainStr );
-      
-//
-//     
-//
-//      HashMap<String, String> functionElementMap = null;
-//      if (functionName.equals("转账")) { // 根据rootword确定业务规则
-//
-//            functionElementMap = ((CrossBankNLPParser)nlpParser).execute(plainStr, functionName, jsonStr);
-//      }
+      request.setAttribute("funtionName", getFunctionName(nlpJsonStr));
+      request.setAttribute("nlpJsonStr", nlpJsonStr);
    }  
    
    

@@ -5,12 +5,10 @@ import java.util.HashMap;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-public class NLPParser {
+public abstract class NLPParser {
 	
 	// 不用抽象方法，感觉不太好，
-	private void match(HashMap<String, String> hashMap, JSONObject jsonWord) {}
-	
-	
+	protected abstract void match(HashMap<String, String> hashMap, JSONObject jsonWord);
 
 	public HashMap<String, String> execute(String originalStr, String functionName, String jsonStr){
 

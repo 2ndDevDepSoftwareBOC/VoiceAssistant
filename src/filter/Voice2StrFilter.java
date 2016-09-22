@@ -77,7 +77,7 @@ public class Voice2StrFilter implements Filter {
       
       Recognizer rec = new Recognizer();
       try {
-		request.setAttribute("plainStr", rec.recognize("voice.wav"));
+		request.setAttribute("originalStr", rec.recognize("voice.wav"));
 	} catch (Exception e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
