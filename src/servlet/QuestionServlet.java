@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import util.TxtReader;
+import tts.TxtReader;
 @WebServlet("/voiceAssistant/question")
 /**
  * 专门负责文本-->音频翻译
