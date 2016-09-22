@@ -2,7 +2,6 @@ package listener;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Map;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
