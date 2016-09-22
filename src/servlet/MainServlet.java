@@ -66,10 +66,11 @@ public class MainServlet extends HttpServlet {
 		NLPParser parser = function.getParser();
 
 		HashMap<String, String> elementMap = parser.execute(originalStr, functionName, nlpJsonStr);
+		// 或者让前端判断是否跳转
 		// 跳转
 		String urlName = "";
 		try {
-			urlName = redirect(functionName, (IndexReader) sct.getAttribute("reader"));// 跳转url
+			urlName = redirect(originalStr, (IndexReader) sct.getAttribute("reader"));// 跳转url
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
