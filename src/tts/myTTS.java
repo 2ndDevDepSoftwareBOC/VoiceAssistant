@@ -156,8 +156,8 @@ public class myTTS {
     
     private static String urlencode(String str){
     	try {
-			//return URLEncoder.encode(str,"UTF-8" );
-    		return URLEncoder.encode( URLEncoder.encode(str,"UTF-8" ) ,"UTF-8" );
+			return URLEncoder.encode(str,"UTF-8" );
+//    		return URLEncoder.encode( URLEncoder.encode(str,"UTF-8" ) ,"UTF-8" );
 		} catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
