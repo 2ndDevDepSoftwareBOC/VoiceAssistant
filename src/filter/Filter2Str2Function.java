@@ -26,25 +26,28 @@ import workFlow.*;
  * @将文本转成结构化文本
  *
  */
-public class Str2FunctionFilter implements Filter {  
+public class Filter2Str2Function implements Filter {  
    
    @Override  
    public void destroy() {  
-      System.out.println("destory filter……");  
+      System.out.println("destory Filter2Str2Function");  
    }  
    
    @Override  
    public void doFilter(ServletRequest request, ServletResponse response,  
          FilterChain chain) throws IOException, ServletException {  
-      System.out.println("Str2FunctionFilter filter……");  
+      System.out.println("init Filter2Str2Function");  
       
       String originalStr = (String) request.getAttribute("originalStr");
       
       TLPAllTaskProcessor tlpProcessor = new TLPAllTaskProcessor();
       String nlpJsonStr = tlpProcessor.process(originalStr);//词性分析及依赖关系
+      String functionName = getFunctionName(nlpJsonStr);
       
-      request.setAttribute("funtionName", getFunctionName(nlpJsonStr));
+      request.setAttribute("functionName", functionName);
       request.setAttribute("nlpJsonStr", nlpJsonStr);
+      
+      chain.doFilter(request, response);
    }  
    
    

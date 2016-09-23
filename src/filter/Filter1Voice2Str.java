@@ -29,17 +29,17 @@ import com.jdnull.speechRec.baiduAPI.Recognizer;
  * @将声音转换为文本
  *
  */
-public class Voice2StrFilter implements Filter {
+public class Filter1Voice2Str implements Filter {
 
 	@Override
 	public void destroy() {
-		System.out.println("destory filter……");
+		System.out.println("destory Filter1Voice2Str");
 	}
 
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
-		System.out.println(" Voice2StrFilter filter……");
+		System.out.println("init Filter1Voice2Str");
 
 		DiskFileItemFactory factory = new DiskFileItemFactory();
 
@@ -72,15 +72,17 @@ public class Voice2StrFilter implements Filter {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		chain.doFilter(request, response);
 
 		Recognizer rec = new Recognizer();
 		try {
-			request.setAttribute("originalStr", rec.recognize("voice.wav"));
+			String recResult = rec.recognize("voice.wav");
+			request.setAttribute("originalStr", recResult);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		chain.doFilter(request, response);
 	}
 
 	@Override
