@@ -2,12 +2,20 @@ package servlet;
 
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileUploadException;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 import tts.TxtReader;
 @WebServlet("/voiceAssistant/question")
@@ -38,16 +46,37 @@ public class QuestionServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+		String storeFile = "audio/question.wav";
 		request.setCharacterEncoding("UTF-8"); 
 		String contentPath = getServletContext().getRealPath("/");  
-		String askPath = contentPath + "/audio";
+		String askPath = contentPath + storeFile;
+		
+//		String storePath = "/Library/WebServer/Documents/audio/";
+//		String retPath = "voiceAssistant/audio/";
 
+		DiskFileItemFactory factory = new DiskFileItemFactory();
+		ServletFileUpload upload = new ServletFileUpload(factory);   
+        upload.setHeaderEncoding("UTF-8");
+		 List items = null;
+		try {
+			items = upload.parseRequest(request);
+		} catch (FileUploadException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}  
+	        Map param = new HashMap();   
+	        for(Object object:items){  
+	            FileItem fileItem = (FileItem) object;   
+	            if (fileItem.isFormField()) {   
+	                param.put(fileItem.getFieldName(), fileItem.getString("utf-8"));//如果你页面编码是utf-8的   
+	            }  
+	        }
 		String question =  request.getParameter("question");
-
+		String teString = (String) param.get("question");
 		TxtReader ask = new TxtReader();
 		ask.excute(question,askPath);
 
-		response.getWriter().print("{audio:\""+askPath+"\"}");
+		response.getWriter().print("{audio:\""+storeFile+"\"}");
 
 	}
 
