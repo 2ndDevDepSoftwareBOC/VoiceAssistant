@@ -7,9 +7,10 @@ import java.util.Map.Entry;
 
 public class WordVector {
 
-	HashMap<String, HashSet<String>> wordsSet;
+	HashMap<String, HashSet<String>> wordsSetMap;
 	
 	public WordVector() {
+		wordsSetMap = new HashMap<String, HashSet<String>>();
 		HashSet<String> hashSet = new HashSet<>();
 		hashSet.add("转账");
 		hashSet.add("汇款");
@@ -18,13 +19,13 @@ public class WordVector {
 		hashSet.add("转");
 		hashSet.add("汇");
 		hashSet.add("给");
-		wordsSet.put("转账", hashSet);
+		wordsSetMap.put("转账", hashSet);
 	}
 	
 	public String matchWordSet(String word) {
 		String matchedWord = "";
 
-		Iterator<Entry<String, HashSet<String>>> iter = wordsSet.entrySet().iterator();
+		Iterator<Entry<String, HashSet<String>>> iter = wordsSetMap.entrySet().iterator();
 		while (iter.hasNext()) {
 			Entry<String, HashSet<String>> entry = (Entry<String, HashSet<String>>) iter.next();
 			HashSet<String> hashSet = entry.getValue();
