@@ -19,13 +19,13 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 import com.jdnull.speechRec.baiduAPI.Recognizer;
 
-@WebServlet("/voiceAssistant/answner")
-public class AnswnerServlet extends HttpServlet {
+@WebServlet("/voiceAssistant/answer")
+public class AnswerServlet extends HttpServlet {
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public AnswnerServlet() {
+	public AnswerServlet() {
 		super();
 	}
 
@@ -42,9 +42,6 @@ public class AnswnerServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		request.setCharacterEncoding("UTF-8"); 
-//		ServletContext sct=getServletConfig().getServletContext();   
-
-//		String answner = (String) request.getAttribute("answner");
 		
 		DiskFileItemFactory factory = new DiskFileItemFactory();
 
@@ -71,7 +68,6 @@ public class AnswnerServlet extends HttpServlet {
 			FileItem item = list.get(0);
 			// 真正写到磁盘上
 			item.write(new File(filename)); // 第三方提供的
-			// 输出信息,前端页面获取,这里用的json格式
 
 		} catch (FileUploadException e) {
 			e.printStackTrace();
@@ -83,7 +79,6 @@ public class AnswnerServlet extends HttpServlet {
 		Recognizer rec = new Recognizer();
 		try {
 			recResult = rec.recognize(filename);
-//			request.setAttribute("originalStr", recResult);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
