@@ -42,9 +42,9 @@ public class Filter2Str2Function implements Filter {
       
       TLPAllTaskProcessor tlpProcessor = new TLPAllTaskProcessor();
       String nlpJsonStr = tlpProcessor.process(originalStr);//词性分析及依赖关系
-      String functionName = getFunctionName(nlpJsonStr);
+      String intentWord = getIntentWord(nlpJsonStr);
       
-      request.setAttribute("functionName", functionName);
+      request.setAttribute("intentWord", intentWord);
       request.setAttribute("nlpJsonStr", nlpJsonStr);
       
       chain.doFilter(request, response);
@@ -56,7 +56,7 @@ public class Filter2Str2Function implements Filter {
     * @param jsonStr
     * @return
     */
-   public String getFunctionName(String jsonStr) {
+   public String getIntentWord(String jsonStr) {
 
 		JSONArray jsonArray = new JSONArray(jsonStr); // 段落的列表
 		JSONArray jsonWordArray = jsonArray.getJSONArray(0).getJSONArray(0); //每个取第一个元素，词的列表

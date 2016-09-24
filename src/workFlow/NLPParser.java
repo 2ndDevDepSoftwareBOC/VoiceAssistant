@@ -7,14 +7,11 @@ import org.json.JSONObject;
 
 public abstract class NLPParser {
 	
-	// 不用抽象方法，感觉不太好，
 	protected abstract void match(HashMap<String, String> hashMap, JSONObject jsonWord);
 
-	public HashMap<String, String> execute(String originalStr, String functionName, String jsonStr){
+	public HashMap<String, String> execute(String jsonStr){
 
 		HashMap<String, String> retMap = new HashMap<String, String>();
-		retMap.put("originalStr", originalStr);
-		retMap.put("function", functionName);
 
 		JSONArray jsonArray = new JSONArray(jsonStr); // 段落的列表
 		JSONArray jsonWordArray = jsonArray.getJSONArray(0).getJSONArray(0); //每个取第一个元素，词的列表
@@ -30,4 +27,5 @@ public abstract class NLPParser {
 
 		return retMap;
 	}
+	
 }

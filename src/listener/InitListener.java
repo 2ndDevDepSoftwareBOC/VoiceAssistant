@@ -72,22 +72,35 @@ public class InitListener implements ServletContextListener {
 	public void contextInitialized(ServletContextEvent sce) {
 		try {
 
-			// 创建导航索引
 			ServletContext sct = sce.getServletContext();
+
+			// 创建导航索引
 			Directory index = indexAll();
 			sct.setAttribute("reader", DirectoryReader.open(index));
 
 			// ------------------初始化交互引擎----------------------
 
-			Function function1 = new Function("100101", "转账", null, null);
-			function1.setParser(new CrossBankNLPParser());
+			String function0Id = "100100";
+			String function0Name = "转账";
+			Function function0 = new Function(function0Id, function0Name, null, null);
+			function0.setParser(new BankTransferNLPParser());
+			
+			String function1Id = "100101";
+			String function1Name = "行内转账";
+			String function1UrlName = "innerbankTransfer";
+			Function function1 = new Function(function1Id, function1Name, function1UrlName, null, null);
+			function1.setParser(new InnerBankTransferNLPParser());
 
-//			Function function2 = new Function("100102", "行内转账", null, null);
-//			function2.setParser(new InnerBankNLPParser());
+			String function2Id = "100102";
+			String function2Name = "跨行转账";
+			String function2UrlName = "interbankTransfer";
+			Function function2 = new Function(function2Id, function2Name, function2UrlName, null, null);
+			function2.setParser(new InterBankTransferNLPParser());
 
 			HashMap<String, Function> functionMap = new HashMap<String, Function>();
-			functionMap.put("转账", function1);
-//			functionMap.put("行内转账", function2);
+			functionMap.put(function0Name, function0);
+			functionMap.put(function1Name, function1);
+			functionMap.put(function2Name, function2);
 
 			sct.setAttribute("functionMap", functionMap);
 
@@ -95,5 +108,4 @@ public class InitListener implements ServletContextListener {
 			e.printStackTrace();
 		}
 	}
-
 }

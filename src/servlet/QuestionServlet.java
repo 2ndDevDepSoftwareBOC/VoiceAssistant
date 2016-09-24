@@ -2,6 +2,7 @@ package servlet;
 
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,7 +47,11 @@ public class QuestionServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		String storeFile = "audio/question.wav";
+		Date date = new Date();
+		long time = date.getTime();
+		String filename = "voice"+time+".wav";
+		
+		String storeFile = "/voiceAssistant/audio/" + filename;
 		request.setCharacterEncoding("UTF-8"); 
 		String contentPath = getServletContext().getRealPath("/");  
 		String askPath = contentPath + storeFile;
@@ -71,8 +76,8 @@ public class QuestionServlet extends HttpServlet {
 	                param.put(fileItem.getFieldName(), fileItem.getString("utf-8"));//如果你页面编码是utf-8的   
 	            }  
 	        }
-		String question =  request.getParameter("question");
-		String teString = (String) param.get("question");
+//		String question =  request.getParameter("question");
+		String question = (String) param.get("question");
 		TxtReader ask = new TxtReader();
 		ask.excute(question,askPath);
 
