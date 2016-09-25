@@ -57,6 +57,7 @@ public class MainServlet extends HttpServlet {
 		ServletContext sct = getServletConfig().getServletContext();
 		IndexReader indexReader = (IndexReader) sct.getAttribute("reader");
 		HashMap<String, Function> functionMap = (HashMap<String, Function>) sct.getAttribute("functionMap");
+		
 		// HttpSession session = request.getSession();
 
 		String intentWord = (String) request.getAttribute("intentWord");

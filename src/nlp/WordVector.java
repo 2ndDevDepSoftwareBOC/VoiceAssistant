@@ -35,7 +35,7 @@ public class WordVector {
 			}
 		}
 
-		return matchedWord.equals("") ? null : matchedWord;
+		return matchedWord;
 	}
 
 	public static void main(String[] args) {
