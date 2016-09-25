@@ -10,11 +10,11 @@ import nlp.NumberFormatConvertor;
 public class BankTransferNLPParser extends NLPParser {
 
 	public static void main(String[] args) throws Exception {
-//		HashMap m = new HashMap<>();
-//		m.put("aa", "aa");
-//		m.put("bb", "bb");
-//		JSONObject jsonObject = new JSONObject(m);
-//		System.out.println(jsonObject.toString());
+		// HashMap m = new HashMap<>();
+		// m.put("aa", "aa");
+		// m.put("bb", "bb");
+		// JSONObject jsonObject = new JSONObject(m);
+		// System.out.println(jsonObject.toString());
 	}
 
 	@Override

@@ -60,7 +60,7 @@ public class NumberFormatConvertor {
 	public static String chineseStrToArabStr(String chineseStr) {
 		return Long.toString(chineseStrToArabLong(chineseStr));
 	}
-	
+
 	public static void main(String[] args) {
 		NumberFormatConvertor numberFormatConvertor = new NumberFormatConvertor();
 		long i = numberFormatConvertor.chineseStrToArabLong("一百亿");

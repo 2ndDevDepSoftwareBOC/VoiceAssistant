@@ -8,7 +8,7 @@ import java.util.Map.Entry;
 public class WordVector {
 
 	HashMap<String, HashSet<String>> wordsSetMap;
-	
+
 	public WordVector() {
 		wordsSetMap = new HashMap<String, HashSet<String>>();
 		HashSet<String> hashSet = new HashSet<>();
@@ -21,7 +21,7 @@ public class WordVector {
 		hashSet.add("给");
 		wordsSetMap.put("转账", hashSet);
 	}
-	
+
 	public String matchWordSet(String word) {
 		String matchedWord = "";
 
@@ -34,10 +34,10 @@ public class WordVector {
 				break;
 			}
 		}
-		
+
 		return matchedWord.equals("") ? null : matchedWord;
 	}
-	
+
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 

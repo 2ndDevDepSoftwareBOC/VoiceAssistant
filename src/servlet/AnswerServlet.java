@@ -1,6 +1,5 @@
 package servlet;
 
-
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -30,19 +29,23 @@ public class AnswerServlet extends HttpServlet {
 	}
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		System.out.println("get");
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 
-		request.setCharacterEncoding("UTF-8"); 
-		
+		request.setCharacterEncoding("UTF-8");
+
 		DiskFileItemFactory factory = new DiskFileItemFactory();
 
 		// 如果没以下两行设置的话，上传大的文件会占用很多内存，
@@ -84,11 +87,9 @@ public class AnswerServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 		response.setCharacterEncoding("utf-8");
-		//保存输入
-		response.getWriter().print("{answer:\""+recResult+"\"}");
+		// 保存输入
+		response.getWriter().print("{answer:\"" + recResult + "\"}");
 
 	}
-
-
 
 }

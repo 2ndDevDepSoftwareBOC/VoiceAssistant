@@ -84,7 +84,7 @@ public class InitListener implements ServletContextListener {
 			String function0Name = "转账";
 			Function function0 = new Function(function0Id, function0Name, null, null);
 			function0.setParser(new BankTransferNLPParser());
-			
+
 			String function1Id = "100101";
 			String function1Name = "行内转账";
 			String function1UrlName = "innerbankTransfer";

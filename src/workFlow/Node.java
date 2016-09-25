@@ -2,19 +2,18 @@ package workFlow;
 
 public class Node {
 
-	private String id;  
+	private String id;
 	private String nextNodeId;
 	private String conditionRegex;
-	
-	private String actionType ;
-	private String question;
-	
-	public  static String ASK = "ASK";
-	public  static String STORE = "STORE";
-	public  static String REDIRECT = "REDIRECT";
 
-	public Node(String id, String nextNodeId, String conditionRegex,
-			String actionType,String question) {
+	private String actionType;
+	private String question;
+
+	public static String ASK = "ASK";
+	public static String STORE = "STORE";
+	public static String REDIRECT = "REDIRECT";
+
+	public Node(String id, String nextNodeId, String conditionRegex, String actionType, String question) {
 		super();
 		this.id = id;
 		this.nextNodeId = nextNodeId;
@@ -62,8 +61,5 @@ public class Node {
 	public void setActionType(String actionType) {
 		this.actionType = actionType;
 	}
-
-	
-
 
 }
