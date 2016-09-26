@@ -86,15 +86,21 @@ public class InitListener implements ServletContextListener {
 			function0.setParser(new BankTransferNLPParser());
 
 			String function1Id = "100101";
-			String function1Name = "行内转账";
+			String function1Name = "中行内转账汇款";
 			String function1UrlName = "innerbankTransfer";
 			Function function1 = new Function(function1Id, function1Name, function1UrlName, null, null);
 			function1.setParser(new InnerBankTransferNLPParser());
 
 			String function2Id = "100102";
-			String function2Name = "跨行转账";
+			String function2Name = "跨行转账汇款";
 			String function2UrlName = "interbankTransfer";
 			Function function2 = new Function(function2Id, function2Name, function2UrlName, null, null);
+			function2.setParser(new InterBankTransferNLPParser());
+			
+			String function3Id = "100103";
+			String function3Name = "账户概览";
+			String function3UrlName = "interbankTransfer";
+			Function function3 = new Function(function3Id, function3Name, function3UrlName, null, null);
 			function2.setParser(new InterBankTransferNLPParser());
 
 			HashMap<String, Function> functionMap = new HashMap<String, Function>();

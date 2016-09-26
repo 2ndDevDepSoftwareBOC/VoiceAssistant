@@ -86,6 +86,7 @@ public class AnswerServlet extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		System.out.println("{answer:\"" + recResult + "\"}");
 		response.setCharacterEncoding("utf-8");
 		// 保存输入
 		response.getWriter().print("{answer:\"" + recResult + "\"}");

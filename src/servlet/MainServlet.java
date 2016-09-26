@@ -79,7 +79,10 @@ public class MainServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 
-		Function function = (Function) functionMap.get(functionName);
+		Function function = (Function) functionMap.get(intentWord);
+		if (function == null) {
+			function = (Function) functionMap.get(functionName);
+		}
 
 		if (function == null) {
 			response.getWriter().print("{\"error\":\"true\"}");
@@ -142,7 +145,7 @@ public class MainServlet extends HttpServlet {
 		for (int i = 0; i < hits.length; ++i) {
 			int docId = hits[i].doc;
 			Document d = searcher.doc(docId);//
-			functionName = d.get("funcitonName");
+			functionName = d.get("functionName");
 		}
 		// System.out.println("url:" + functionName);
 
