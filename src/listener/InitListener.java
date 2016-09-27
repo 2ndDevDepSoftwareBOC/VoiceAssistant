@@ -79,34 +79,62 @@ public class InitListener implements ServletContextListener {
 			sct.setAttribute("reader", DirectoryReader.open(index));
 
 			// ------------------初始化交互引擎----------------------
+			HashMap<String, Function> functionMap = new HashMap<String, Function>();
 
 			String function0Id = "100100";
 			String function0Name = "转账";
 			Function function0 = new Function(function0Id, function0Name, null, null);
 			function0.setParser(new BankTransferNLPParser());
+			functionMap.put(function0Name, function0);
 
 			String function1Id = "100101";
 			String function1Name = "中行内转账汇款";
 			String function1UrlName = "innerbankTransfer";
 			Function function1 = new Function(function1Id, function1Name, function1UrlName, null, null);
 			function1.setParser(new InnerBankTransferNLPParser());
+			functionMap.put(function1Name, function1);
 
 			String function2Id = "100102";
 			String function2Name = "跨行转账汇款";
 			String function2UrlName = "interbankTransfer";
 			Function function2 = new Function(function2Id, function2Name, function2UrlName, null, null);
 			function2.setParser(new InterBankTransferNLPParser());
-			
-			String function3Id = "100103";
-			String function3Name = "账户概览";
-			String function3UrlName = "interbankTransfer";
-			Function function3 = new Function(function3Id, function3Name, function3UrlName, null, null);
-			function2.setParser(new InterBankTransferNLPParser());
-
-			HashMap<String, Function> functionMap = new HashMap<String, Function>();
-			functionMap.put(function0Name, function0);
-			functionMap.put(function1Name, function1);
 			functionMap.put(function2Name, function2);
+			
+			String function5Id = "100103";
+			String function5Name = "外币跨境汇款";
+			String function5UrlName = "crossborderTransfer";
+			Function function5 = new Function(function5Id, function5Name, function5UrlName, null, null);
+			function5.setParser(new CrossborderTransferNLPParser());
+			functionMap.put(function5Name, function5);
+			
+			String function3Id = "101100";
+			String function3Name = "账户概览";
+			String function3UrlName = "checkBalance";
+			Function function3 = new Function(function3Id, function3Name, function3UrlName, null, null);
+			function3.setParser(new CheckBalanceNLPParser());
+			functionMap.put(function3Name, function3);
+			
+			String function4Id = "101101";
+			String function4Name = "交易明细";
+			String function4UrlName = "transactionDetail";
+			Function function4 = new Function(function4Id, function4Name, function4UrlName, null, null);
+			function4.setParser(new TransactionDetailNLPParser());
+			functionMap.put(function4Name, function4);
+			
+			String function6Id = "102100";
+			String function6Name = "信用卡账单查询";
+			String function6UrlName = "queryBill";
+			Function function6 = new Function(function6Id, function6Name, function6UrlName, null, null);
+			function6.setParser(new QueryBillNLPParser());
+			functionMap.put(function6Name, function6);
+			
+			String function7Id = "102101";
+			String function7Name = "信用卡还款";
+			String function7UrlName = "paybackBill";
+			Function function7 = new Function(function7Id, function7Name, function7UrlName, null, null);
+			function7.setParser(new PaybackBillNLPParser());
+			functionMap.put(function7Name, function7);
 
 			sct.setAttribute("functionMap", functionMap);
 
