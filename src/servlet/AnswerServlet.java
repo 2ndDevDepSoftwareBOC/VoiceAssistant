@@ -15,8 +15,13 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import com.jdnull.speechRec.baiduAPI.Recognizer;
+
+import nlp.NumberFormatConvertor;
+import nlp.TLPAllTaskProcessor;
 
 @WebServlet("/voiceAssistant/answer")
 public class AnswerServlet extends HttpServlet {
@@ -86,11 +91,42 @@ public class AnswerServlet extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		recResult = numberConvertIfNeeded(recResult);
+		
 		System.out.println("{answer:\"" + recResult + "\"}");
 		response.setCharacterEncoding("utf-8");
 		// 保存输入
 		response.getWriter().print("{answer:\"" + recResult + "\"}");
 
+	}
+	
+	private String numberConvertIfNeeded(String originalStr) {
+		TLPAllTaskProcessor allTaskProcessor = new TLPAllTaskProcessor();
+		String jsonStr = "";
+		try {
+			jsonStr = allTaskProcessor.process(originalStr);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		JSONArray jsonArray = new JSONArray(jsonStr); // 段落的列表
+		JSONArray jsonWordArray = jsonArray.getJSONArray(0).getJSONArray(0); // 每个取第一个元素，词的列表
+		
+		String retStr = originalStr;
+		int wordId = 0;
+		JSONObject jsonWord = null;
+		while (wordId < jsonWordArray.length()) {
+
+			jsonWord = jsonWordArray.getJSONObject(wordId);
+			if (jsonWord.get("pos").equals("m")) {
+				retStr = NumberFormatConvertor.chineseStrToArabStr(originalStr);
+				break;
+			}
+			wordId++;
+		}
+		return retStr;
 	}
 
 }
